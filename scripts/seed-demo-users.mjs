@@ -44,9 +44,19 @@ for (const [roleKey, firstName, lastName, jobTitle] of users) {
     last_name: lastName, email, job_title: jobTitle,
   });
   if (profileError) throw profileError;
+
+  const { data: existingMembership, error: membershipLookupError } = await supabase
+    .from("organization_members")
+    .select("invited_at")
+    .eq("organization_id", organizationId)
+    .eq("profile_id", user.id)
+    .maybeSingle();
+  if (membershipLookupError) throw membershipLookupError;
+  const invitedAt = existingMembership?.invited_at ?? new Date().toISOString();
+
   const { error: membershipError } = await supabase.from("organization_members").upsert({
     organization_id: organizationId, profile_id: user.id, role_id: roleId,
-    accepted_at: new Date().toISOString(), active: true,
+    invited_at: invitedAt, accepted_at: invitedAt, active: true,
   }, { onConflict: "organization_id,profile_id" });
   if (membershipError) throw membershipError;
   console.log(`Provisioned ${email} as ${roleKey}.`);
