@@ -4,11 +4,16 @@
 
 The application uses Next.js-compatible routing through Vinext and Vite, producing a Cloudflare Worker-compatible ESM build. The interface is a client component because search, navigation, responsive menu state, and notifications are interactive.
 
+Authentication is request-scoped through Supabase SSR. The root route validates claims on the server, while `proxy.ts` refreshes cookie sessions and rejects unauthenticated requests before protected content renders. PostgreSQL RLS is the final authorization boundary.
+
 ## Source organization
 
 - `app/layout.tsx` owns global metadata, icons, and the HTML document.
 - `app/page.tsx` owns the dashboard model, rendering, filtering, and ephemeral UI state.
 - `app/globals.css` owns product tokens, layout, components, and responsive breakpoints.
+- `auth/` owns server identity and reusable authorization helpers.
+- `lib/supabase/` owns browser, server, environment, and proxy clients.
+- `supabase/migrations/` owns the versioned production database schema.
 - `.openai/hosting.json` declares that the application currently needs neither D1 nor R2.
 
 ## State and data

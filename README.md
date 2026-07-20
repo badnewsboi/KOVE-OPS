@@ -2,6 +2,8 @@
 
 KOVE OPS is a responsive operations command center for maintenance, asset health, inventory risk, and frontline team coordination. The application is implemented as a production-ready Next.js 16 interface using React 19 and TypeScript.
 
+The M1.1 platform foundation uses Supabase Auth and PostgreSQL RLS to provide cookie-based sessions, organization isolation, profiles, memberships, and server-enforced RBAC.
+
 ## Included experience
 
 - Operational overview with live performance metrics
@@ -24,6 +26,7 @@ All displayed data is realistic demo data held locally in the page component. No
 
 ```bash
 npm install
+npm run typecheck
 npm run dev
 ```
 
@@ -57,6 +60,8 @@ worker/             Cloudflare-compatible runtime entry
 ```
 
 Additional product and implementation notes are available in [`docs/PRODUCT.md`](docs/PRODUCT.md) and [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+
+Identity documentation is available in [`docs/AUTHENTICATION.md`](docs/AUTHENTICATION.md), [`docs/DATABASE.md`](docs/DATABASE.md), [`docs/RBAC.md`](docs/RBAC.md), and [`docs/DEVELOPMENT.md`](docs/DEVELOPMENT.md).
 
 ## Data and privacy
 
