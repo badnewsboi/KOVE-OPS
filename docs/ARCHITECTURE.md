@@ -6,6 +6,12 @@ The application uses Next.js-compatible routing through Vinext and Vite, produci
 
 Authentication is request-scoped through Supabase SSR. The root route validates claims on the server, while `proxy.ts` refreshes cookie sessions and rejects unauthenticated requests before protected content renders. PostgreSQL RLS is the final authorization boundary.
 
+## Industrial platform boundary
+
+Route handlers validate transport input and return a stable `{ data, error }` envelope. They delegate persistence to repositories, which always include the organization filter even though RLS independently enforces the tenant boundary. PostgreSQL owns referential integrity, state constraints, explicit Data API grants, immutable revision snapshots, and automatic audit capture.
+
+Mutable `orders` represent current operational state. `order_revisions`, `revision_line_items`, and `revision_differences` form the permanent customer-change record. Revision headers allow approval-state transitions only; snapshot content cannot be overwritten or deleted.
+
 ## Source organization
 
 - `app/layout.tsx` owns global metadata, icons, and the HTML document.

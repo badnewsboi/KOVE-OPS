@@ -4,6 +4,8 @@ KOVE OPS is a responsive operations command center for maintenance, asset health
 
 The M1.1 platform foundation uses Supabase Auth and PostgreSQL RLS to provide cookie-based sessions, organization isolation, profiles, memberships, and server-enforced RBAC.
 
+The M2 industrial data platform adds tenant-isolated customers, vendors, facilities, materials, orders, immutable revisions, approvals, warehouse execution, risk, collaboration, attachments, activity, and audit history behind the existing dashboard.
+
 ## Included experience
 
 - Operational overview with live performance metrics
@@ -15,7 +17,7 @@ The M1.1 platform foundation uses Supabase Auth and PostgreSQL RLS to provide co
 - Responsive desktop, tablet, and mobile navigation
 - Keyboard-accessible native controls and visible interaction feedback
 
-All displayed data is realistic demo data held locally in the page component. No account, database, or third-party service is required.
+The dashboard retains its established demo presentation, while authentication and industrial records persist securely in Supabase. A provisioned account and local Supabase environment configuration are required.
 
 ## Requirements
 
@@ -44,9 +46,12 @@ npm run start
 ```bash
 npm run lint
 npm test
+npm run test:platform:live
 ```
 
 ## Project structure
+
+Platform references: [data model](docs/DATA_MODEL.md), [API contract](docs/API.md), and [database ERD](docs/DATABASE.md).
 
 ```text
 app/
@@ -65,4 +70,4 @@ Identity documentation is available in [`docs/AUTHENTICATION.md`](docs/AUTHENTIC
 
 ## Data and privacy
 
-The current build has no analytics, cookies, remote APIs, or persistence. Search and interface state remain in browser memory and reset on refresh.
+The application uses secure Supabase session cookies and the Supabase Data API. Operational records persist behind organization-scoped RLS. No analytics, AI services, or email integrations are included.

@@ -20,6 +20,12 @@ export async function updateSession(request: NextRequest) {
   const { data } = await supabase.auth.getClaims();
   const isAuthPath = AUTH_PATHS.some((path) => request.nextUrl.pathname.startsWith(path));
   if (!data?.claims && !isAuthPath) {
+    if (request.nextUrl.pathname.startsWith("/api/")) {
+      return NextResponse.json(
+        { data: null, error: { code: "UNAUTHENTICATED", message: "Authentication is required." } },
+        { status: 401, headers: { "Cache-Control": "private, no-store" } },
+      );
+    }
     const destination = request.nextUrl.clone();
     destination.pathname = "/auth/sign-in";
     destination.searchParams.set("next", request.nextUrl.pathname);
